@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -23,11 +24,16 @@ public class User {
 
     @Column(length = 20, unique = true)
     private String username;
+
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String name;
     private String website;
     private String bio;  // 자기소개
+
+    @Column(nullable = false)
     private String email;
     private String phone;
     private String gender;
