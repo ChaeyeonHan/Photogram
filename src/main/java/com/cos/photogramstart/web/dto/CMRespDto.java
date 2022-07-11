@@ -9,9 +9,9 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CMRespDto {  // 응답 Dto
+public class CMRespDto<T> {  // 응답 Dto : 제네릭으로 구현
 
+    private int code;  // 1(성공), -1(실패)
     private String message;
-    private Map<String, String> errorMap;
-
+    private T data;
 }
