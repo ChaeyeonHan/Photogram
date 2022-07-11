@@ -1,6 +1,7 @@
 package com.cos.photogramstart.web;
 
 import com.cos.photogramstart.domain.user.User;
+import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.service.AuthService;
 import com.cos.photogramstart.web.dto.auth.SignupDto;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +45,7 @@ public class AuthController {
     }
 
     // 회원가입버튼 클릭 -> /auth/signup -> /auth/signin
-    @PostMapping("/auth/signup")
+    @PostMapping("/auth/signup")  // 회원가입 실패시 bindingResult에 모두 담긴다
     public String signup(@Valid SignupDto signupDto, BindingResult bindingResult) {  // 회원가입 실제 진행  key=value의 형태로 들어온다
 //        log.info(signupDto.toString());
         // User <- signupDto
@@ -55,7 +56,7 @@ public class AuthController {
                 errorMap.put(error.getField(), error.getDefaultMessage());
 //                System.out.println(error.getDefaultMessage());
             }
-            throw new RuntimeException("유효성 검사 실패");
+            throw new CustomValidationException("유효성 검사 실패함", errorMap);
         } else {
             User user = signupDto.toEntity();
             log.info(user.toString());
