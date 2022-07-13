@@ -101,8 +101,8 @@
 <!--로그아웃, 회원정보변경 모달-->
 <div class="modal-info" onclick="modalInfo()">
 	<div class="modal">
-		<button onclick="location.href='/user/update'">회원정보 변경</button>
-		<button onclick="location.href='/logout'">로그아웃</button>
+		<button onclick="location.href='/user/1/update'">회원정보 변경</button>
+		<button onclick="location.href='/logout'">로그아웃</button> <!-- 시큐리티가 세션을 끊어준다 -->
 		<button onclick="closePopup('.modal-info')">취소</button>
 	</div>
 </div>
