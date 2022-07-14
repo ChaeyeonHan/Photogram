@@ -3,9 +3,14 @@ package com.cos.photogramstart.web.dto.user;
 import com.cos.photogramstart.domain.user.User;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
 public class UserUpdateDto {  // 유저네임, 이메일 빼고 모두 받아와준다(수정가능)
+
+    @NotBlank
     private String name;  // 회원정보 수정시 필수로 넘어오는 데이터
+    @NotBlank
     private String password;  // 필수
     private String website;
     private String bio;
