@@ -16,7 +16,7 @@ public class UserUpdateDto {  // 유저네임, 이메일 빼고 모두 받아와
     public User toEntity(){
         return User.builder()
                 .name(name)
-                .password(password)
+                .password(password)  // 사용자가 패스워드를 넣어주지 않으면 공백으로 업데이트된다 -> 이게 문제! Validation체크를 해줘야 한다
                 .website(website)
                 .bio(bio)
                 .phone(phone)
