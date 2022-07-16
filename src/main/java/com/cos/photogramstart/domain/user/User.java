@@ -43,7 +43,7 @@ public class User {
 
     private LocalDateTime createDate;  // 언제 데이터가 들어왔는지
 
-    @PrePersist  // db에 insert되기 직전에 실행된다.
+   @PrePersist  // db에 insert되기 직전에 실행된다.
    public void createDate(){
         this.createDate = LocalDateTime.now();
     }
