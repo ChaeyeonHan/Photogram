@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // super삭제 -> 기존 시큐리티가 가지고 있는 기능이 다 비활성화 된다
         http.csrf().disable();  // 비활성화(postman/홈페이지를 통한 방법 구분X)
         http.authorizeRequests()
-                .antMatchers("/", "/user/**", "/image/**", "/subscribe/**", "/comment/**").authenticated()  // 인증이 필요한 페이지
+                .antMatchers("/", "/user/**", "/image/**", "/subscribe/**", "/comment/**", "/api/**").authenticated()  // 인증이 필요한 페이지
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()// 접속시 로그인 페이지(/auth/login)로 이동
