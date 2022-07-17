@@ -24,7 +24,11 @@ public class ControllerExceptionHandler {
         // 1. 클라이언트에게 응답할때는 Script가 좋음
         // 2. Ajax 통신 - CMRespDto
         // 3. Android 통신 - CMRespDto
-        return Script.back(e.getErrorMap().toString());
+        if (e.getErrorMap() == null){
+            return Script.back(e.getMessage());
+        }else {
+            return Script.back(e.getErrorMap().toString());
+        }
     }
 
     // 데이터를 리턴(ajax로 통신시)
