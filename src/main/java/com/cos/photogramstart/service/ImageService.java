@@ -48,6 +48,6 @@ public class ImageService {
         Image image = imageUploadDto.toEntity(imageFileName, principalDetails.getUser());  // 13b00cd8-e623-47c5-be31-0a9c5acb6aef_cat.jpg가 db에 저장된다
         Image imageEntity = imageRepository.save(image);
 
-        System.out.println(imageEntity);
+//        System.out.println(imageEntity);
     }
 }

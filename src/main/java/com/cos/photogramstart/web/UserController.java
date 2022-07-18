@@ -28,12 +28,12 @@ public class UserController {
     @GetMapping("/user/{id}/update")
     public String update(@PathVariable int id, @AuthenticationPrincipal PrincipalDetails principalDetails, Model model){
         // 1. 어노테이션 사용(추천)
-        System.out.println("세션 정보: " + principalDetails.getUser());
+//        System.out.println("세션 정보: " + principalDetails.getUser());
 
         // 2. 어노테이션 사용 안하고 꺼내는 방법
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         PrincipalDetails principalDetails1 = (PrincipalDetails) auth.getPrincipal();
-        System.out.println("직접 찾은 세션 정보: " + principalDetails1.getUser());
+//        System.out.println("직접 찾은 세션 정보: " + principalDetails1.getUser());
 
         model.addAttribute("principal", principalDetails.getUser());
         return "user/update";

@@ -40,7 +40,7 @@ public class UserApiController {  // 데이터로 응답하는 컨트롤러
         } else {
             User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
             principalDetails.setUser(userEntity);  // 세션의 정보도 변경해준다
-            return new CMRespDto<>(1, "회원수정완료", userEntity);
+            return new CMRespDto<>(1, "회원수정완료", userEntity);  // 응답시에 userEntity의 모든 getter함수가 호출되고,JSON으로 파싱하여 응답한다.
         }
     }
 }
