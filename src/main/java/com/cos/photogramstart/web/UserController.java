@@ -3,6 +3,7 @@ package com.cos.photogramstart.web;
 import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.service.UserService;
+import com.cos.photogramstart.web.dto.user.UserProfileDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,10 +19,10 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/user/{id}")
-    public String profile(@PathVariable int id, Model model){  // 사용자 화면으로 이동할때 이미지 데이터를 들고 이동한다.
-        User userEntity = userService.회원프로필(id);  // 해당 id의 사용자가 있는지 확인
-        model.addAttribute("user", userEntity);  // "변수명", 값
+    @GetMapping("/user/{pageUserId}")
+    public String profile(@PathVariable int pageUserId, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails){  // 사용자 화면으로 이동할때 이미지 데이터를 들고 이동한다.
+        UserProfileDto dto = userService.회원프로필(pageUserId, principalDetails.getUser().getId());  // 해당 id의 사용자가 있는지 확인
+        model.addAttribute("dto", dto);  // "변수명", 값
         return "user/profile";
     }
 

@@ -6,6 +6,7 @@ import com.cos.photogramstart.domain.user.UserRepository;
 import com.cos.photogramstart.handler.ex.CustomException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
+import com.cos.photogramstart.web.dto.user.UserProfileDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,15 +23,20 @@ public class UserService {
     private final ImageRepository imageRepository;
 
     @Transactional(readOnly = true)
-    public User 회원프로필(int userId){
+    public UserProfileDto 회원프로필(int pageUserId, int principalId){
+        UserProfileDto dto = new UserProfileDto();
+
         // SELECT * FROM image WHERE userId = :userId;
-        User userEntity = userRepository.findById(userId).orElseThrow(() -> {
+        User userEntity = userRepository.findById(pageUserId).orElseThrow(() -> {
            throw new CustomException("해당 프로필 페이지는 없는 페이지입니다.");
         });
 
+        dto.setUser(userEntity);
+        dto.setPageOwnerState(pageUserId == principalId);  // 1은 페이지 주인, -1은 주인이 아님
+
 //        System.out.println("================================");
 //        userEntity.getImages().get(0);  // LAZY전략 - image를 가져온다
-        return userEntity;
+        return dto;
     }
 
     @Transactional
