@@ -13,4 +13,12 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Integer> {
     @Modifying
     @Query(value = "DELETE FROM subscribe WHERE fromUserId = :fromUserId AND toUserId = :toUserId", nativeQuery = true)  // :는 아래 변수를 바인드해서 넣어준다는 의미
     void mUnSubscribe(int fromUserId, int toUserId);  // 1번 유저 삭제쿼리 -> 0리턴시 -> 1번 유저가 없어 변경된 것이 없는 상태
+
+    // 구독 여부
+    @Query(value = "SELECT COUNT(*) FROM subscribe WHERE fromUserId = :principalId AND toUserId = :pageUserId", nativeQuery = true)
+    int mSubscribeState(int principalId, int pageUserId);  // 1이면 이미 구독한 상태, 0이면 구독 안한상태
+
+    // 구독수
+    @Query(value = "SELECT COUNT(*) FROM subscribe WHERE fromUserId = :pageUserId", nativeQuery = true)
+    int mSubscribeCount(int pageUserId);  // 반환값이 구독자수
 }
