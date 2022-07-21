@@ -57,6 +57,20 @@ public class ImageService {
     @Transactional(readOnly = true)  // 영속성 컨텍스트 변경감지를 해서, 변경이 되었으면 더티체킹을해서 db에 flush(반영) X -> 성능이 좀 더 좋아짐
     public Page<Image> 이미지스토리(int principalId, Pageable pageable){
         Page<Image> images = imageRepository.mStory(principalId, pageable);
+
+        // images에 좋아요 상태 담기
+        images.forEach((image) ->{
+
+            image.setLikeCount(image.getLikes().size());
+
+            image.getLikes().forEach((likes -> {
+                if (likes.getUser().getId() == principalId){ // 해당 이미지에 좋아요를 누른 사람들을 찾아서 현재 로그인한 사람이 좋아요를 눌렀는지 확인
+                    image.setLikeState(true);
+
+                }
+            }));
+        });
+
         return images;
     }
 }

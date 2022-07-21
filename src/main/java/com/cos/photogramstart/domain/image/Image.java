@@ -1,5 +1,6 @@
 package com.cos.photogramstart.domain.image;
 
+import com.cos.photogramstart.domain.likes.Likes;
 import com.cos.photogramstart.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -31,6 +33,15 @@ public class Image {
     private User user;  // 1명의 유저가 이미지 여러개 올릴 수 있음
 
     // 이미지 좋아요
+    @JsonIgnoreProperties({"image"})  // 무한 참조 방지
+    @OneToMany(mappedBy = "image")
+    private List<Likes> likes;
+
+    @Transient  // db에 컬럼이 생기지 않는다
+    private boolean likeState;
+
+    @Transient
+    private int likeCount;  // 좋아요 갯수
 
     // 댓글
 
