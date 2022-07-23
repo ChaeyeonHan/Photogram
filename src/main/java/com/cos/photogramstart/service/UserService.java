@@ -41,6 +41,11 @@ public class UserService {
 
         dto.setSubscribeState(subscribeState == 1);  // 1과 같으면 true, 다르면 false
         dto.setSubscribeCount(subscribeCount);
+        // 좋아요 갯수는 이미지마다 들고있는 정보이기에 dto에 넣을 수X
+        // 유저 프로필에서 좋아요 갯수 보이게하기
+        userEntity.getImages().forEach((image) -> {
+            image.setLikeCount(image.getLikes().size());
+        });
 
 //        System.out.println("================================");
 //        userEntity.getImages().get(0);  // LAZY전략 - image를 가져온다
