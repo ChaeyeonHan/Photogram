@@ -33,6 +33,8 @@
 </head>
 
 <body>
+	<!-- principalId 담아두는 곳. js에서 꺼내서 사용할 수 있음-->
+	<input type="hidden" id="principalId" value="${principal.user.id}"/>
 	
 	<header class="header">
 		<div class="container">

@@ -39,7 +39,14 @@ public class CommentService {
     }
 
     @Transactional
-    public void 댓글삭제(){
+    public void 댓글삭제(int id){
+        commentRepository.deleteById(id);
 
+        try{
+            commentRepository.deleteById(id);
+        } catch (Exception e){
+            throw new CustomApiException(e.getMessage());
+            // CustomException은 html파일 리턴, CustomApiException은 데이터를 리턴
+        }
     }
 }
