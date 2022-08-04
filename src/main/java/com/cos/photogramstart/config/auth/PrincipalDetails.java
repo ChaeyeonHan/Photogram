@@ -4,19 +4,31 @@ import com.cos.photogramstart.domain.user.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 @Data
-public class PrincipalDetails implements UserDetails {
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private static final long serialVersionUID = 1L;
 
     private User user;
+    private Map<String, Object> attributes;
 
     public PrincipalDetails(User user) {
         this.user = user;
+    }
+
+    public PrincipalDetails(User user, Map<String, Object> attributes) {
+        this.user = user;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;  // {id=2888674394759532, name=한채연, email=kate2236e@naver.com}의 정보가 들어간다
     }
 
     // 권한이 한개가 아니라 여러개 일 수 있기에
@@ -67,5 +79,10 @@ public class PrincipalDetails implements UserDetails {
     @Override
     public boolean isEnabled()  {
         return true;
+    }
+
+    @Override
+    public String getName() {
+        return (String) attributes.get("name");
     }
 }
