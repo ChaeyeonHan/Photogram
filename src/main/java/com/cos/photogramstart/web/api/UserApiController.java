@@ -47,17 +47,10 @@ public class UserApiController {  // 데이터로 응답하는 컨트롤러
             BindingResult bindingResult,  // @Valid 바로 뒤 파라미터로 오도록 적어주기!
             @AuthenticationPrincipal PrincipalDetails principalDetails){
 
-        if (bindingResult.hasErrors()){
-            Map<String, String> errorMap = new HashMap<>();
+        User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
+        principalDetails.setUser(userEntity);  // 세션의 정보도 변경해준다
+        return new CMRespDto<>(1, "회원수정완료", userEntity);  // 응답시에 userEntity의 모든 getter함수가 호출되고,JSON으로 파싱하여 응답한다.
 
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            } throw new CustomValidationApiException("유효성 검사 실패함", errorMap);
-        } else {
-            User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
-            principalDetails.setUser(userEntity);  // 세션의 정보도 변경해준다
-            return new CMRespDto<>(1, "회원수정완료", userEntity);  // 응답시에 userEntity의 모든 getter함수가 호출되고,JSON으로 파싱하여 응답한다.
-        }
     }
 
     @PutMapping("/api/user/{principalId}/profileImageUrl")

@@ -49,21 +49,11 @@ public class AuthController {
     public String signup(@Valid SignupDto signupDto, BindingResult bindingResult) {  // 회원가입 실제 진행  key=value의 형태로 들어온다
 //        log.info(signupDto.toString());
         // User <- signupDto
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errorMap = new HashMap<>();
+        User user = signupDto.toEntity();
+        log.info(user.toString());
 
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errorMap.put(error.getField(), error.getDefaultMessage());
-//                System.out.println(error.getDefaultMessage());
-            }
-            throw new CustomValidationException("유효성 검사 실패함", errorMap);
-        } else {
-            User user = signupDto.toEntity();
-            log.info(user.toString());
-
-            User userEntity = authService.회원가입(user);
-            System.out.println("userEntity = " + userEntity);
-            return "/auth/signin";  // 회원가입 성공시 로그인하러 로그인페이지로 이동
-        }
+        User userEntity = authService.회원가입(user);
+        System.out.println("userEntity = " + userEntity);
+        return "/auth/signin";  // 회원가입 성공시 로그인하러 로그인페이지로 이동
     }
 }
